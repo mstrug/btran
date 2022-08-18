@@ -25,4 +25,4 @@ To run unit tests use following command: `cargo test`
 
 ## Other info
 
-Application developed on Debian, rustc version `.63.0.
+Application developed on Debian, rustc version 1.63.0.
