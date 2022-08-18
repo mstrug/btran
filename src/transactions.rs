@@ -42,7 +42,7 @@ impl TransactionProcessor {
         Ok(tp)
     }
     
-    /// Processed specified transaction
+    /// Process specified transaction
     pub fn process_transaction(&mut self, transaction: Transaction) -> Result<(),ClientDataError> {
         // firstly check if client with specified ID exists in Hash map
         if let Some(client) = self.data.get_mut(&transaction.client) {
@@ -126,6 +126,23 @@ withdrawal, 1, 4, 1.1234
 withdrawal, 2, 5, 3.1234"; // this transaction should fail because of negative result
         let output: OutputType = vec![ (1,2.1234,0.0,false), (2,2.1234,0.0,false) ];
         validate_tp(input, output);
+    }
+    
+    #[test]
+    fn test_input_4() {
+        let input = 
+"type, client, tx, amount
+deposit, 1, 1, 1.0
+dispute, 1, 2, 2.0
+withdrawal, 1, 3, 1.0";
+        let tp = TransactionProcessor::new_from_csv(input.as_bytes());
+        if let Err(x) = tp {
+            if let Some(err) = x.downcast_ref::<ClientDataError>() {
+                match err {
+                    ClientDataError::InvalidInput(tx) => assert_eq!(*tx, 2),
+                }
+            } else { panic!() }
+        } else { panic!() }
     }
     
     #[test]

@@ -4,12 +4,12 @@ use super::data_types::*;
 /// Error definition
 #[derive(Debug)]
 pub enum ClientDataError {
-    InvalidInput
+    InvalidInput(TransactionIdType)
 }
 impl std::fmt::Display for ClientDataError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match self {
-            ClientDataError::InvalidInput => write!(f, "Invalid csv input")
+            ClientDataError::InvalidInput(tx) => write!(f, "Invalid csv input for transaction ID: {}", tx)
         }
     }
 }
@@ -46,7 +46,7 @@ impl ClientData {
                     self.available += amount;
                     Ok(())
                 } else {
-                    Err(ClientDataError::InvalidInput)
+                    Err(ClientDataError::InvalidInput(transaction.tx))
                 }
             }
             TransactionType::Withdrawal => {
@@ -57,7 +57,7 @@ impl ClientData {
                     } // else -> ignore                    
                     Ok(())
                 } else {
-                    Err(ClientDataError::InvalidInput)
+                    Err(ClientDataError::InvalidInput(transaction.tx))
                 }
             }
             TransactionType::Dispute => {
@@ -69,7 +69,7 @@ impl ClientData {
                     } // else -> ignore
                     Ok(())
                 } else {
-                    Err(ClientDataError::InvalidInput)
+                    Err(ClientDataError::InvalidInput(transaction.tx))
                 }
             }
             TransactionType::Resolve => {
@@ -83,7 +83,7 @@ impl ClientData {
                     } // else -> ignore
                     Ok(())
                 } else {
-                    Err(ClientDataError::InvalidInput)
+                    Err(ClientDataError::InvalidInput(transaction.tx))
                 }
             }
             TransactionType::Chargeback => {
@@ -97,7 +97,7 @@ impl ClientData {
                     } // else -> ignore
                     Ok(())
                 } else {
-                    Err(ClientDataError::InvalidInput)
+                    Err(ClientDataError::InvalidInput(transaction.tx))
                 }
             }
         }
