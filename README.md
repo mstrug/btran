@@ -2,7 +2,7 @@
 
 ## Usage
 
-Run application with specyfing `csv` file as arument:
+Run application specyfing `csv` file as an argument:
 ```
 btran <csv input file>
 ```
@@ -18,6 +18,9 @@ Application outputs to `stdout`.
 Columns: type, client, tx, amount
 
 type values: deposit, withdrawal, dispute, resolve, chargeback
+client: client ID
+tx: transaction ID (unique)
+amount: transaction value (only for deposit and withdrawal)
 
 ## Test
 
