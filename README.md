@@ -18,8 +18,11 @@ Application outputs to `stdout`.
 Columns: type, client, tx, amount
 
 type values: deposit, withdrawal, dispute, resolve, chargeback
+
 client: client ID
+
 tx: transaction ID (unique)
+
 amount: transaction value (only for deposit and withdrawal)
 
 ## Test
